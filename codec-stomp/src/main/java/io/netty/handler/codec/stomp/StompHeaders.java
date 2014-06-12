@@ -16,31 +16,62 @@
 package io.netty.handler.codec.stomp;
 
 import io.netty.handler.codec.AsciiString;
+import io.netty.handler.codec.TextHeaderProcessor;
+import io.netty.handler.codec.TextHeaders;
 
 /**
  * Provides the constants for the standard STOMP header names and values.
  */
-public final class StompHeaders {
+public interface StompHeaders extends TextHeaders {
 
-    public static final AsciiString ACCEPT_VERSION = new AsciiString("accept-version");
-    public static final AsciiString HOST = new AsciiString("host");
-    public static final AsciiString LOGIN = new AsciiString("login");
-    public static final AsciiString PASSCODE = new AsciiString("passcode");
-    public static final AsciiString HEART_BEAT = new AsciiString("heart-beat");
-    public static final AsciiString VERSION = new AsciiString("version");
-    public static final AsciiString SESSION = new AsciiString("session");
-    public static final AsciiString SERVER = new AsciiString("server");
-    public static final AsciiString DESTINATION = new AsciiString("destination");
-    public static final AsciiString ID = new AsciiString("id");
-    public static final AsciiString ACK = new AsciiString("ack");
-    public static final AsciiString TRANSACTION = new AsciiString("transaction");
-    public static final AsciiString RECEIPT = new AsciiString("receipt");
-    public static final AsciiString MESSAGE_ID = new AsciiString("message-id");
-    public static final AsciiString SUBSCRIPTION = new AsciiString("subscription");
-    public static final AsciiString RECEIPT_ID = new AsciiString("receipt-id");
-    public static final AsciiString MESSAGE = new AsciiString("message");
-    public static final AsciiString CONTENT_LENGTH = new AsciiString("content-length");
-    public static final AsciiString CONTENT_TYPE = new AsciiString("content-type");
+    AsciiString ACCEPT_VERSION = new AsciiString("accept-version");
+    AsciiString HOST = new AsciiString("host");
+    AsciiString LOGIN = new AsciiString("login");
+    AsciiString PASSCODE = new AsciiString("passcode");
+    AsciiString HEART_BEAT = new AsciiString("heart-beat");
+    AsciiString VERSION = new AsciiString("version");
+    AsciiString SESSION = new AsciiString("session");
+    AsciiString SERVER = new AsciiString("server");
+    AsciiString DESTINATION = new AsciiString("destination");
+    AsciiString ID = new AsciiString("id");
+    AsciiString ACK = new AsciiString("ack");
+    AsciiString TRANSACTION = new AsciiString("transaction");
+    AsciiString RECEIPT = new AsciiString("receipt");
+    AsciiString MESSAGE_ID = new AsciiString("message-id");
+    AsciiString SUBSCRIPTION = new AsciiString("subscription");
+    AsciiString RECEIPT_ID = new AsciiString("receipt-id");
+    AsciiString MESSAGE = new AsciiString("message");
+    AsciiString CONTENT_LENGTH = new AsciiString("content-length");
+    AsciiString CONTENT_TYPE = new AsciiString("content-type");
 
-    private StompHeaders() { }
+
+    @Override
+    StompHeaders add(CharSequence name, Object value);
+
+    @Override
+    StompHeaders add(CharSequence name, Iterable<?> values);
+
+    @Override
+    StompHeaders add(CharSequence name, Object... values);
+
+    @Override
+    StompHeaders add(TextHeaders headers);
+
+    @Override
+    StompHeaders set(CharSequence name, Object value);
+
+    @Override
+    StompHeaders set(CharSequence name, Iterable<?> values);
+
+    @Override
+    StompHeaders set(CharSequence name, Object... values);
+
+    @Override
+    StompHeaders set(TextHeaders headers);
+
+    @Override
+    StompHeaders clear();
+
+    @Override
+    StompHeaders forEachEntry(TextHeaderProcessor processor);
 }

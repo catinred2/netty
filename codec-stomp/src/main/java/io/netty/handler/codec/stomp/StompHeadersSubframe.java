@@ -15,8 +15,6 @@
  */
 package io.netty.handler.codec.stomp;
 
-import io.netty.handler.codec.TextHeaders;
-
 /**
  * An interface that defines a {@link StompFrame}'s command and headers.
  *
@@ -32,5 +30,5 @@ public interface StompHeadersSubframe extends StompSubframe {
     /**
      * Returns headers of this frame.
      */
-    TextHeaders headers();
+    StompHeaders headers();
 }

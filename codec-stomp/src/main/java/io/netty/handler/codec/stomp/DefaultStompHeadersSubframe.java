@@ -16,8 +16,6 @@
 package io.netty.handler.codec.stomp;
 
 import io.netty.handler.codec.DecoderResult;
-import io.netty.handler.codec.DefaultTextHeaders;
-import io.netty.handler.codec.TextHeaders;
 
 /**
  * Default implementation of {@link StompHeadersSubframe}.
@@ -26,7 +24,7 @@ public class DefaultStompHeadersSubframe implements StompHeadersSubframe {
 
     protected final StompCommand command;
     protected DecoderResult decoderResult = DecoderResult.SUCCESS;
-    protected final TextHeaders headers = new DefaultTextHeaders();
+    protected final StompHeaders headers = new DefaultStompHeaders();
 
     public DefaultStompHeadersSubframe(StompCommand command) {
         if (command == null) {
@@ -41,7 +39,7 @@ public class DefaultStompHeadersSubframe implements StompHeadersSubframe {
     }
 
     @Override
-    public TextHeaders headers() {
+    public StompHeaders headers() {
         return headers;
     }
 

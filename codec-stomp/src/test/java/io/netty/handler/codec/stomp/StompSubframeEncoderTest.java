@@ -18,7 +18,6 @@ package io.netty.handler.codec.stomp;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.embedded.EmbeddedChannel;
-import io.netty.handler.codec.TextHeaders;
 import io.netty.util.CharsetUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -43,7 +42,7 @@ public class StompSubframeEncoderTest {
     @Test
     public void testFrameAndContentEncoding() {
         StompHeadersSubframe frame = new DefaultStompHeadersSubframe(StompCommand.CONNECT);
-        TextHeaders headers = frame.headers();
+        StompHeaders headers = frame.headers();
         headers.set(StompHeaders.HOST, "stomp.github.org");
         headers.set(StompHeaders.ACCEPT_VERSION, "1.1,1.2");
         channel.writeOutbound(frame);

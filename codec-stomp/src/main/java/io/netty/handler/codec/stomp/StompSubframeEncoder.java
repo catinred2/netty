@@ -19,7 +19,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.AsciiString;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import io.netty.handler.codec.TextHeaders;
 import io.netty.util.CharsetUtil;
 
 import java.util.List;
@@ -66,7 +65,7 @@ public class StompSubframeEncoder extends MessageToMessageEncoder<StompSubframe>
         buf.writeBytes(frame.command().toString().getBytes(CharsetUtil.US_ASCII));
         buf.writeByte(StompConstants.CR).writeByte(StompConstants.LF);
 
-        TextHeaders headers = frame.headers();
+        StompHeaders headers = frame.headers();
         for (Map.Entry<CharSequence, CharSequence> e: headers.unconvertedEntries()) {
             CharSequence k = e.getKey();
             CharSequence v = e.getValue();
