@@ -1253,30 +1253,6 @@ public abstract class HttpHeaders implements Iterable<Map.Entry<String, String>>
         return true;
     }
 
-    static int hash(CharSequence name) {
-        if (name instanceof AsciiString) {
-            // AsciiString already calculates positive case-insensitive hash code.
-            return name.hashCode();
-        }
-
-        int h = 0;
-        for (int i = name.length() - 1; i >= 0; i --) {
-            char c = name.charAt(i);
-            if (c >= 'A' && c <= 'Z') {
-                c += 32;
-            }
-            h = 31 * h + c;
-        }
-
-        if (h > 0) {
-            return h;
-        } else if (h == Integer.MIN_VALUE) {
-            return Integer.MAX_VALUE;
-        } else {
-            return -h;
-        }
-    }
-
     static void encode(HttpHeaders headers, ByteBuf buf) {
         if (headers instanceof DefaultHttpHeaders) {
             ((DefaultHttpHeaders) headers).encode(buf);
