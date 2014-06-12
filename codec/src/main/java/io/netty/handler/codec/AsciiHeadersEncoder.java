@@ -29,32 +29,33 @@ public final class AsciiHeadersEncoder implements TextHeaderProcessor {
 
     @Override
     public boolean process(CharSequence name, CharSequence value) throws Exception {
+        final ByteBuf buf = this.buf;
         final int nameLen = name.length();
         final int valueLen = value.length();
         final int entryLen = nameLen + valueLen + 4;
         int offset = buf.writerIndex();
         buf.ensureWritable(entryLen);
-        writeAscii(offset, name);
-        offset += nameLen;
+        offset = writeAscii(buf, offset, name);
         buf.setByte(offset ++, ':');
         buf.setByte(offset ++, ' ');
-        writeAscii(offset, value);
-        offset += valueLen;
+        offset = writeAscii(buf, offset, value);
         buf.setByte(offset ++, '\r');
         buf.setByte(offset ++, '\n');
         buf.writerIndex(offset);
         return true;
     }
 
-    private void writeAscii(int offset, CharSequence name) {
+    private static int writeAscii(ByteBuf buf, int offset, CharSequence name) {
         int length = name.length();
         if (name instanceof AsciiString) {
             ((AsciiString) name).copy(0, buf, offset, length);
+            offset += length;
         } else {
             for (int i = 0; i < length; i ++) {
                 char ch = name.charAt(i);
                 buf.setByte(offset ++, ch < 256? (byte) ch : '?');
             }
         }
+        return offset;
     }
 }
