@@ -35,6 +35,21 @@ public final class AsciiString implements CharSequence, Comparable<CharSequence>
 
     public static final AsciiString EMPTY_STRING = new AsciiString("");
 
+    /** XXX: Make sure that this method and {@link #hashCode()} uses the same hashing algorithm */
+    static int hashCode(CharSequence value) {
+        if (value instanceof AsciiString) {
+            return value.hashCode();
+        }
+
+        int hash = 0;
+        final int end = value.length();
+        for (int i = 0; i < end; i ++) {
+            hash = hash * 31 ^ value.charAt(i) & 31;
+        }
+
+        return hash;
+    }
+
     private final byte[] value;
     private final int valueStart;
     private final int valueLen;
@@ -247,16 +262,12 @@ public final class AsciiString implements CharSequence, Comparable<CharSequence>
     @Override
     public int hashCode() {
         int hash = this.hash;
-        if (hash != 0) {
+        if (hash != 0 || valueLen == 0) {
             return hash;
         }
 
         for (int i = valueStart; i < valueEnd; i ++) {
-            hash = 31 * hash + toLowerCase(value[i]);
-        }
-
-        if (hash == 0) {
-            hash = 1;
+            hash = hash * 31 ^ value[i] & 31;
         }
 
         return this.hash = hash;

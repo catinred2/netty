@@ -59,21 +59,7 @@ public class DefaultTextHeaders implements TextHeaders {
     }
 
     protected int hashCode(CharSequence name) {
-        if (name instanceof AsciiString) {
-            return name.hashCode();
-        }
-
-        // Note: this must be identical to AsciiString.hashCode().
-        int hash = 0;
-        for (int i = 0; i < name.length(); i ++) {
-            char ch = name.charAt(i);
-            if (ch >= 'A' && ch <= 'Z') {
-                ch += 32;
-            }
-            hash = 31 * hash + ch;
-        }
-
-        return hash == 0? 1 : hash;
+        return AsciiString.hashCode(name);
     }
 
     protected CharSequence convertName(CharSequence name) {
