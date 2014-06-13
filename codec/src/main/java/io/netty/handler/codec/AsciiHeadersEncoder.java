@@ -21,10 +21,56 @@ import io.netty.buffer.ByteBuf;
 
 public final class AsciiHeadersEncoder implements TextHeaderProcessor {
 
+    /**
+     * The separator characters to insert between a header name and a header value.
+     */
+    public enum SeparatorType {
+        /**
+         * {@code ':'}
+         */
+        COLON,
+        /**
+         * {@code ': '}
+         */
+        COLON_SPACE,
+    }
+
+    /**
+     * The newline characters to insert between header entries.
+     */
+    public enum NewlineType {
+        /**
+         * {@code '\n'}
+         */
+        LF,
+        /**
+         * {@code '\r\n'}
+         */
+        CRLF
+    }
+
     private final ByteBuf buf;
+    private final SeparatorType separatorType;
+    private final NewlineType newlineType;
 
     public AsciiHeadersEncoder(ByteBuf buf) {
+        this(buf, SeparatorType.COLON_SPACE, NewlineType.CRLF);
+    }
+
+    public AsciiHeadersEncoder(ByteBuf buf, SeparatorType separatorType, NewlineType newlineType) {
+        if (buf == null) {
+            throw new NullPointerException("buf");
+        }
+        if (separatorType == null) {
+            throw new NullPointerException("separatorType");
+        }
+        if (newlineType == null) {
+            throw new NullPointerException("newlineType");
+        }
+
         this.buf = buf;
+        this.separatorType = separatorType;
+        this.newlineType = newlineType;
     }
 
     @Override
@@ -36,11 +82,33 @@ public final class AsciiHeadersEncoder implements TextHeaderProcessor {
         int offset = buf.writerIndex();
         buf.ensureWritable(entryLen);
         offset = writeAscii(buf, offset, name);
-        buf.setByte(offset ++, ':');
-        buf.setByte(offset ++, ' ');
+
+        switch (separatorType) {
+            case COLON:
+                buf.setByte(offset ++, ':');
+                break;
+            case COLON_SPACE:
+                buf.setByte(offset ++, ':');
+                buf.setByte(offset ++, ' ');
+                break;
+            default:
+                throw new Error();
+        }
+
         offset = writeAscii(buf, offset, value);
-        buf.setByte(offset ++, '\r');
-        buf.setByte(offset ++, '\n');
+
+        switch (newlineType) {
+            case LF:
+                buf.setByte(offset ++, '\n');
+                break;
+            case CRLF:
+                buf.setByte(offset ++, '\r');
+                buf.setByte(offset ++, '\n');
+                break;
+            default:
+                throw new Error();
+        }
+
         buf.writerIndex(offset);
         return true;
     }

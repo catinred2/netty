@@ -20,7 +20,8 @@ import io.netty.handler.codec.TextHeaderProcessor;
 import io.netty.handler.codec.TextHeaders;
 
 /**
- * Provides the constants for the standard STOMP header names and values.
+ * The multimap data structure for the STOMP header names and values. It also provides the constants for the standard
+ * STOMP header names and values.
  */
 public interface StompHeaders extends TextHeaders {
 
@@ -43,7 +44,6 @@ public interface StompHeaders extends TextHeaders {
     AsciiString MESSAGE = new AsciiString("message");
     AsciiString CONTENT_LENGTH = new AsciiString("content-length");
     AsciiString CONTENT_TYPE = new AsciiString("content-type");
-
 
     @Override
     StompHeaders add(CharSequence name, Object value);
