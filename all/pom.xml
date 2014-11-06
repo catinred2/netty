@@ -20,7 +20,7 @@
   <parent>
     <groupId>io.netty</groupId>
     <artifactId>netty-parent</artifactId>
-    <version>4.0.24.Final</version>
+    <version>4.0.24.Final.Easytimer</version>
   </parent>
 
   <artifactId>netty-all</artifactId>
@@ -108,28 +108,28 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-buffer</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-codec</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-codec-http</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-codec-socks</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
@@ -143,42 +143,42 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-handler</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-transport</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-transport-rxtx</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-transport-sctp</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-transport-udt</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-example</artifactId>
-      <version>4.0.24.Final</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>

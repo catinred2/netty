@@ -26,7 +26,7 @@
   <groupId>io.netty</groupId>
   <artifactId>netty-parent</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.24.Final</version>
+  <version>4.0.24.Final.Easytimer</version>
 
   <name>Netty</name>
   <url>http://netty.io/</url>
@@ -1153,5 +1153,19 @@
       </plugins>
     </pluginManagement>
   </build>
+<distributionManagement>
+		<repository>
+			<id>local-thirdparty</id>
+			<name>Local Repository Release</name>
+			<url>
+				http://192.168.1.30:8081/nexus/content/repositories/thirdparty/</url>
+		</repository>
+		<snapshotRepository>
+			<id>local-thirdparty-snapshots</id>
+			<name>Local Repository Snapshots</name>
+			<url>
+				http://192.168.1.30:8081/nexus/content/repositories/thirdparty-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
 
