@@ -814,6 +814,7 @@
           <keywords>true</keywords>
         </configuration>
       </plugin>
+<!--
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
         <version>2.7</version>
@@ -821,7 +822,8 @@
           <retryFailedDeploymentCount>10</retryFailedDeploymentCount>
         </configuration>
       </plugin>
-      <plugin>
+     -->
+	 <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.4.2</version>
         <configuration>
@@ -1151,5 +1153,19 @@
       </plugins>
     </pluginManagement>
   </build>
+<distributionManagement>
+		<repository>
+			<id>local-thirdparty</id>
+			<name>Local Repository Release</name>
+			<url>
+				http://192.168.1.30:8081/nexus/content/repositories/thirdparty/</url>
+		</repository>
+		<snapshotRepository>
+			<id>local-thirdparty-snapshots</id>
+			<name>Local Repository Snapshots</name>
+			<url>
+				http://192.168.1.30:8081/nexus/content/repositories/thirdparty-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
 
