@@ -10,6 +10,20 @@ public class EasyTimerStart {
     
     private Logger logger = Logger.getLogger(EasyTimerStart.class);
     
+    private volatile static EasyTimerStart instance = null;
+    
+    public static EasyTimerStart getInstance() {
+        if (instance == null) {
+            synchronized (EasyTimerStart.class) {
+                if (instance == null) {
+                    instance = new EasyTimerStart();
+                }
+            }
+            
+        }
+        return instance;
+    }
+    
     /**
      * 
      * <一句话功能简述>添加执行的任务，EasyTimerTask(String cronExpression, String name)
