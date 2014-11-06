@@ -29,13 +29,14 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class EasyTimerTask implements TimerTask {
     
-    String name;
+    public String name;
     
-    EasyHashedWheelTimer hashedWheelTimer;
+    public EasyHashedWheelTimer hashedWheelTimer;
     
-    CronExpression cronExpression;
+    public CronExpression cronExpression;
     
-    public EasyTimerTask(String cronExpression, String name) throws ParseException {
+    public EasyTimerTask(String cronExpression, String name)
+        throws ParseException {
         this.cronExpression = new CronExpression(cronExpression);
         this.name = name;
     }
@@ -43,7 +44,6 @@ public abstract class EasyTimerTask implements TimerTask {
     @Override
     public abstract void run(Timeout timeout)
         throws Exception;
-    
     
     public String getName() {
         return name;
@@ -53,7 +53,6 @@ public abstract class EasyTimerTask implements TimerTask {
         this.name = name;
     }
     
-    
     public long nextTriggerTime() {
         Date validDate = cronExpression.getNextValidTimeAfter(new Date());
         if (validDate == null) {
@@ -61,7 +60,5 @@ public abstract class EasyTimerTask implements TimerTask {
         }
         return validDate.getTime();
     }
-    
-    
     
 }
