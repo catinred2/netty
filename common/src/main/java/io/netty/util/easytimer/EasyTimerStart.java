@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
 public class EasyTimerStart {
-    
+    private static final EasyTimer timer = new EasyHashedWheelTimer();
     private Logger logger = Logger.getLogger(EasyTimerStart.class);
     
     private volatile static EasyTimerStart instance = null;
@@ -43,7 +43,6 @@ public class EasyTimerStart {
         if (span < 0) {
             span = 0;
         }
-        final EasyTimer timer = new EasyHashedWheelTimer();
         Timeout timeout = timer.newTimeout(task, span, TimeUnit.MILLISECONDS);
         TimerUtil.timeoutMap.put(task.getName(), timeout);// 任务名作为标识符，停止时。以后考虑用唯一码等
         return true;
