@@ -26,7 +26,7 @@
   <groupId>io.netty</groupId>
   <artifactId>netty-parent</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.24.Final.Easytimer</version>
+  <version>4.0.25.Final.Easytimer</version>
 
   <name>Netty</name>
   <url>http://netty.io/</url>
@@ -53,7 +53,7 @@
     <url>https://github.com/netty/netty</url>
     <connection>scm:git:git://github.com/netty/netty.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/netty/netty.git</developerConnection>
-    <tag>netty-4.0.24.Final</tag>
+    <tag>netty-4.0.25.Final</tag>
   </scm>
 
   <developers>
@@ -108,8 +108,66 @@
       <properties>
         <!-- Our Javadoc has poor enough quality to fail the build thanks to JDK8 javadoc which got more strict. -->
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
-        <!-- npn-boot does not work with JDK 8 -->
-        <argLine.bootcp>-D_</argLine.bootcp>
+      </properties>
+    </profile>
+    <profile>
+      <id>alpn-8</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.8</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.alpn.version>8.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>alpn-8u05</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.8.0_05</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.alpn.version>8.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>alpn-8u11</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.8.0_11</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.alpn.version>8.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>alpn-8u20</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.8.0_20</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.alpn.version>8.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>alpn-8u25</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.8.0_25</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.alpn.version>8.1.2.v20141202</jetty.alpn.version>
       </properties>
     </profile>
     <profile>
@@ -124,7 +182,7 @@
       </modules>
     </profile>
     <!--
-      Netty must be released from RHEL 6.5 x86_64 or compatible so that:
+      Netty must be released from RHEL 6.6 x86_64 or compatible so that:
 
         1) we ship x86_64 version of epoll transport officially, and
         2) we ensure the ABI compatibility with older GLIBC versions.
@@ -155,12 +213,12 @@
                     </requireProperty>
                     <requireFilesContent>
                       <message>
-                        Release process must be performed on RHEL 6.5 or its derivatives.
+                        Release process must be performed on RHEL 6.6 or its derivatives.
                       </message>
                       <files>
                         <file>/etc/redhat-release</file>
                       </files>
-                      <content>release 6.5</content>
+                      <content>release 6.6</content>
                     </requireFilesContent>
                   </rules>
                 </configuration>
@@ -281,6 +339,7 @@
       </activation>
       <properties>
         <jetty.npn.version>1.1.6.v20130911</jetty.npn.version>
+        <jetty.alpn.version>7.1.0.v20141016</jetty.alpn.version>
       </properties>
     </profile>
     <profile>
@@ -293,6 +352,7 @@
       </activation>
       <properties>
         <jetty.npn.version>1.1.6.v20130911</jetty.npn.version>
+        <jetty.alpn.version>7.1.0.v20141016</jetty.alpn.version>
       </properties>
     </profile>
     <profile>
@@ -305,6 +365,102 @@
       </activation>
       <properties>
         <jetty.npn.version>1.1.6.v20130911</jetty.npn.version>
+        <jetty.alpn.version>7.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>npn-alpn-7u55</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.7.0_55</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.npn.version>1.1.8.v20141013</jetty.npn.version>
+        <jetty.alpn.version>7.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>npn-alpn-7u60</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.7.0_60</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.npn.version>1.1.8.v20141013</jetty.npn.version>
+        <jetty.alpn.version>7.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>npn-alpn-7u65</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.7.0_65</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.npn.version>1.1.8.v20141013</jetty.npn.version>
+        <jetty.alpn.version>7.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>npn-alpn-7u67</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.7.0_67</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.npn.version>1.1.8.v20141013</jetty.npn.version>
+        <jetty.alpn.version>7.1.0.v20141016</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>npn-alpn-7u71</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.7.0_71</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.npn.version>1.1.9.v20141016</jetty.npn.version>
+        <jetty.alpn.version>7.1.2.v20141202</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>npn-alpn-7u72</id>
+      <activation>
+        <property>
+          <name>java.version</name>
+          <value>1.7.0_72</value>
+        </property>
+      </activation>
+      <properties>
+        <jetty.npn.version>1.1.9.v20141016</jetty.npn.version>
+        <jetty.alpn.version>7.1.2.v20141202</jetty.alpn.version>
+      </properties>
+    </profile>
+    <profile>
+      <!--
+      This profile exists because either ALPN or NPN can exits on the class path at once, but not both.
+      The JDK version is typically used to distinguish which should be used but there is some overlap
+      where both could be used.  ALPN is the default and this profile is enabled with a -Dforcenpn=true arugument
+      -->
+      <id>forcenpn</id>
+      <activation>
+        <property>
+          <name>forcenpn</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <argLine.bootcp>-Xbootclasspath/p:${jetty.npn.path}</argLine.bootcp>
       </properties>
     </profile>
   </profiles>
@@ -313,8 +469,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <jboss.marshalling.version>1.3.18.GA</jboss.marshalling.version>
-    <jetty.npn.version>1.1.7.v20140316</jetty.npn.version>
+    <jetty.npn.version>1.1.9.v20141016</jetty.npn.version>
     <jetty.npn.path>${settings.localRepository}/org/mortbay/jetty/npn/npn-boot/${jetty.npn.version}/npn-boot-${jetty.npn.version}.jar</jetty.npn.path>
+    <jetty.alpn.version>8.1.2.v20141202</jetty.alpn.version>
+    <jetty.alpn.path>${settings.localRepository}/org/mortbay/jetty/alpn/alpn-boot/${jetty.alpn.version}/alpn-boot-${jetty.alpn.version}.jar</jetty.alpn.path>
     <argLine.common>
       -server
       -dsa -da -ea:io.netty...
@@ -325,7 +483,7 @@
       -XX:+OptimizeStringConcat
       -XX:+HeapDumpOnOutOfMemoryError
     </argLine.common>
-    <argLine.bootcp>-Xbootclasspath/p:${jetty.npn.path}</argLine.bootcp>
+    <argLine.bootcp>-Xbootclasspath/p:${jetty.alpn.path}</argLine.bootcp>
     <argLine.leak>-verbose:gc</argLine.leak> <!-- Overridden when 'leak' profile is active -->
     <argLine.coverage>-D_</argLine.coverage> <!-- Overridden when 'coverage' profile is active -->
   </properties>
@@ -372,12 +530,22 @@
       <dependency>
         <groupId>org.eclipse.jetty.npn</groupId>
         <artifactId>npn-api</artifactId>
-        <version>1.1.0.v20120525</version>
+        <version>1.1.1.v20141010</version>
       </dependency>
       <dependency>
         <groupId>org.mortbay.jetty.npn</groupId>
         <artifactId>npn-boot</artifactId>
         <version>${jetty.npn.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty.alpn</groupId>
+        <artifactId>alpn-api</artifactId>
+        <version>1.1.0.v20141014</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mortbay.jetty.alpn</groupId>
+        <artifactId>alpn-boot</artifactId>
+        <version>${jetty.alpn.version}</version>
       </dependency>
 
       <!-- Google Protocol Buffers - completely optional -->
@@ -391,7 +559,7 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>netty-tcnative</artifactId>
-        <version>1.1.30.Fork2</version>
+        <version>1.1.32.Fork1</version>
         <classifier>${os.detected.classifier}</classifier>
         <scope>compile</scope>
         <optional>true</optional>
@@ -413,7 +581,7 @@
       <dependency>
         <groupId>com.jcraft</groupId>
         <artifactId>jzlib</artifactId>
-          <version>1.1.2</version>
+        <version>1.1.2</version>
       </dependency>
 
       <dependency>
@@ -484,6 +652,12 @@
         <scope>test</scope>
       </dependency>
       <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-library</artifactId>
+        <version>1.3</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.easymock</groupId>
         <artifactId>easymock</artifactId>
         <version>3.2</version>
@@ -499,6 +673,18 @@
         <groupId>org.jmock</groupId>
         <artifactId>jmock-junit4</artifactId>
         <version>2.6.0</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>1.10.8</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -529,6 +715,13 @@
         <version>0.5-rc1</version>
         <scope>test</scope>
       </dependency>
+
+      <!-- Test suite dependency for generating a compressed heap dump file -->
+      <dependency>
+        <groupId>org.tukaani</groupId>
+        <artifactId>xz</artifactId>
+        <version>1.5</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -547,6 +740,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.easymock</groupId>
       <artifactId>easymock</artifactId>
       <scope>test</scope>
@@ -559,6 +757,11 @@
     <dependency>
       <groupId>org.jmock</groupId>
       <artifactId>jmock-junit4</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -635,6 +838,14 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
         <version>1.9</version>
+        <dependencies>
+            <!-- Upgrade ASM and support Java 8 bytecode -->
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-all</artifactId>
+                <version>5.0.3</version>
+            </dependency>
+        </dependencies>
         <configuration>
           <signature>
             <groupId>org.codehaus.mojo.signature</groupId>
@@ -763,7 +974,7 @@
               <instructions>
                 <Export-Package>${project.groupId}.*</Export-Package>
                 <!-- enforce JVM vendor package as optional -->
-                <Import-Package>sun.misc.*;resolution:=optional,sun.nio.ch;resolution:=optional,sun.security.*;resolution:=optional,*</Import-Package>
+                <Import-Package>sun.misc.*;resolution:=optional,sun.nio.ch;resolution:=optional,sun.security.*;resolution:=optional,org.eclipse.jetty.npn;version="[1,)";resolution=optional,org.eclipse.jetty.alpn;version="[1,)";resolution=optional,*</Import-Package>
                 <!-- override "internal" private package convention -->
                 <Private-Package>!*</Private-Package>
               </instructions>

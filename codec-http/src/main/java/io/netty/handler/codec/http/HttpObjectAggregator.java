@@ -212,11 +212,17 @@ public class HttpObjectAggregator extends MessageToMessageDecoder<HttpObject> {
                     currentMessage.setTrailingHeaders(new DefaultHttpHeaders());
                 }
 
-                // Set the 'Content-Length' header.
-                currentMessage.headers().set(
-                        HttpHeaders.Names.CONTENT_LENGTH,
-                        String.valueOf(content.readableBytes()));
-
+                // Set the 'Content-Length' header. If one isn't already set.
+                // This is important as HEAD responses will use a 'Content-Length' header which
+                // does not match the actual body, but the number of bytes that would be
+                // transmitted if a GET would have been used.
+                //
+                // See rfc2616 14.13 Content-Length
+                if (!isContentLengthSet(currentMessage)) {
+                    currentMessage.headers().set(
+                            Names.CONTENT_LENGTH,
+                            String.valueOf(content.readableBytes()));
+                }
                 // All done
                 out.add(currentMessage);
             }
@@ -275,17 +281,23 @@ public class HttpObjectAggregator extends MessageToMessageDecoder<HttpObject> {
         protected final HttpMessage message;
         private HttpHeaders trailingHeaders;
 
-        private AggregatedFullHttpMessage(HttpMessage message, ByteBuf content, HttpHeaders trailingHeaders) {
+        AggregatedFullHttpMessage(HttpMessage message, ByteBuf content, HttpHeaders trailingHeaders) {
             super(content);
             this.message = message;
             this.trailingHeaders = trailingHeaders;
         }
+
         @Override
         public HttpHeaders trailingHeaders() {
-            return trailingHeaders;
+            HttpHeaders trailingHeaders = this.trailingHeaders;
+            if (trailingHeaders == null) {
+                return HttpHeaders.EMPTY_HEADERS;
+            } else {
+                return trailingHeaders;
+            }
         }
 
-        public void setTrailingHeaders(HttpHeaders trailingHeaders) {
+        void setTrailingHeaders(HttpHeaders trailingHeaders) {
             this.trailingHeaders = trailingHeaders;
         }
 
@@ -336,7 +348,7 @@ public class HttpObjectAggregator extends MessageToMessageDecoder<HttpObject> {
 
     private static final class AggregatedFullHttpRequest extends AggregatedFullHttpMessage implements FullHttpRequest {
 
-        private AggregatedFullHttpRequest(HttpRequest request, ByteBuf content, HttpHeaders trailingHeaders) {
+        AggregatedFullHttpRequest(HttpRequest request, ByteBuf content, HttpHeaders trailingHeaders) {
             super(request, content, trailingHeaders);
         }
 
@@ -397,11 +409,17 @@ public class HttpObjectAggregator extends MessageToMessageDecoder<HttpObject> {
             super.setProtocolVersion(version);
             return this;
         }
+
+        @Override
+        public String toString() {
+            return HttpMessageUtil.appendFullRequest(new StringBuilder(256), this).toString();
+        }
     }
 
     private static final class AggregatedFullHttpResponse extends AggregatedFullHttpMessage
             implements FullHttpResponse {
-        private AggregatedFullHttpResponse(HttpResponse message, ByteBuf content, HttpHeaders trailingHeaders) {
+
+        AggregatedFullHttpResponse(HttpResponse message, ByteBuf content, HttpHeaders trailingHeaders) {
             super(message, content, trailingHeaders);
         }
 
@@ -450,6 +468,11 @@ public class HttpObjectAggregator extends MessageToMessageDecoder<HttpObject> {
         public FullHttpResponse retain() {
             super.retain();
             return this;
+        }
+
+        @Override
+        public String toString() {
+            return HttpMessageUtil.appendFullResponse(new StringBuilder(256), this).toString();
         }
     }
 }
