@@ -33,6 +33,7 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.NotYetConnectedException;
+import java.util.UUID;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
@@ -69,6 +70,7 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
     /** Cache for the string representation of this channel */
     private boolean strValActive;
     private String strVal;
+    private final String id;
 
     /**
      * Creates a new instance.
@@ -78,10 +80,13 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
      */
     protected AbstractChannel(Channel parent) {
         this.parent = parent;
+        id = UUID.randomUUID().toString();
         unsafe = newUnsafe();
         pipeline = new DefaultChannelPipeline(this);
     }
-
+    public String Id(){
+    	return id;
+    }
     @Override
     public boolean isWritable() {
         ChannelOutboundBuffer buf = unsafe.outboundBuffer();
