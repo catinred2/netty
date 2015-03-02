@@ -70,7 +70,7 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
     /** Cache for the string representation of this channel */
     private boolean strValActive;
     private String strVal;
-    private final String id;
+    private final ChannelId id;
 
     /**
      * Creates a new instance.
@@ -80,11 +80,11 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
      */
     protected AbstractChannel(Channel parent) {
         this.parent = parent;
-        id = UUID.randomUUID().toString();
+        id = DefaultChannelId.newInstance();
         unsafe = newUnsafe();
         pipeline = new DefaultChannelPipeline(this);
     }
-    public String Id(){
+    public ChannelId Id(){
     	return id;
     }
     @Override
