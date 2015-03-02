@@ -105,6 +105,37 @@ public final class ByteBufUtil {
 
         return new String(buf);
     }
+    /**
+     * Returns a <a href="http://en.wikipedia.org/wiki/Hex_dump">hex dump</a>
+     * of the specified byte array.
+     */
+    public static String hexDump(byte[] array) {
+        return hexDump(array, 0, array.length);
+    }
+
+    /**
+     * Returns a <a href="http://en.wikipedia.org/wiki/Hex_dump">hex dump</a>
+     * of the specified byte array's sub-region.
+     */
+    public static String hexDump(byte[] array, int fromIndex, int length) {
+        if (length < 0) {
+            throw new IllegalArgumentException("length: " + length);
+        }
+        if (length == 0) {
+            return "";
+        }
+
+        int endIndex = fromIndex + length;
+        char[] buf = new char[length << 1];
+
+        int srcIdx = fromIndex;
+        int dstIdx = 0;
+        for (; srcIdx < endIndex; srcIdx ++, dstIdx += 2) {
+            System.arraycopy(HEXDUMP_TABLE, (array[srcIdx] & 0xFF) << 1, buf, dstIdx, 2);
+        }
+
+        return new String(buf);
+    }
 
     /**
      * Calculates the hash code of the specified buffer.  This method is
